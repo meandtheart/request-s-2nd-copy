@@ -20,14 +20,12 @@ body {
     background-color: #fcf9f2;
     color: var(--accent-brown);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    overflow: hidden; 
     -webkit-font-smoothing: antialiased;
     width: 100%;
 	max-width: 100%;
     min-height: 130vh;
 	
 	overflow-x: hidden;
-	overflow-y: auto;
 }
 
 .page-bg {
@@ -45,55 +43,90 @@ body {
 /* Header Styling */
 .shop-header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 20px;              /* Space between logo and button */
-    padding: 30px 20px;
-    background: transparent;
-    position: relative;
-    z-index: auto;
+    justify-content: center;
+    gap: 16px;
+    padding: 14px 20px;
+
+    width: 100%;
+    background: linear-gradient(
+        135deg, 
+        rgba(255, 255, 255, 0.45) 0%, 
+        rgba(242, 232, 217, 0.25) 100%
+    );
+
+    /* 2. Frosted Liquid Blur */
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+
+    /* 3. Glass Rim / Border Effect */
+    border-bottom: 2.5px solid #ab9685;
+
+    /* 4. 3D Glass Surface Reflections (Top inner glow + Bottom soft shadow) */
+    box-shadow: 
+        0 8px 32px 0 rgba(92, 77, 76, 0.08),
+        inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 2px 0 rgba(115, 94, 89, 0.1);
+    position: fixed !important;
+    top: auto !important;
+	left: 0 !important;
+    z-index: 1000 !important;
+    min-height: 64px;
 }
 
-.logo-link {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10000;
-    
+/* Round logo, pinned to the left of the header */
+.round-logo-link {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    
-    padding: 5px 12px;
-    border-radius: 30px;
-    
-    /* Kept your existing frosted glass backdrop */
-    background: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(2px) saturate(120%);          
-    -webkit-backdrop-filter: blur(2px) saturate(120%);
-    border: 1.5px solid rgba(255, 255, 255, 0.65);
-    
-    box-shadow: 
-        0 8px 20px rgba(92, 77, 76, 0.06),   
-        inset 0 1.5px 2px rgba(255, 255, 255, 0.9),
-        inset 0 -1px 2px rgba(255, 255, 255, 0.3);
 }
 
-/* Controls the sizing of your PNG logo */
-.logo-img {
-    height: 45px; /* Adjust this value up/down depending on your PNG size */
+.round-logo-img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+
+    border: 2px solid #e8d9c0;
+    box-shadow: 0 4px 10px rgba(92, 77, 76, 0.12);
+}
+
+/* Yaeneko wordmark, centered in the header regardless of the
+   width of the logo on the left / icons on the right */
+.site-name-link {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site-name-img {
+    height: 56px;
     width: auto;
     display: block;
     object-fit: contain;
+
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 	
-	image-rendering: auto; /* Lets the browser use high-quality bilinear/bicubic scaling */
-    -webkit-font-smoothing: antialiased; /* Keeps curves smooth */
+	
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .explore-btn {
-	margin-top: 70px;
+	margin: 80px auto 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,6 +149,7 @@ body {
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(92, 77, 76, 0.2);
     transition: all 0.3s ease;
+	
 }
 
 .explore-btn:hover {
@@ -338,11 +372,15 @@ body {
 
 /* Glass Plate Container for Instagram and Cart Buttons */
 .header-actions {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px; /* Spacing between the buttons inside the plate */
     padding: 4px 8px; /* Padding inside the glass plate */
+
+    width: fit-content;
+    margin: 16px auto 0;
+	position: relative;
 
     /* Clear Glassmorphism Styling */
     background: rgba(255, 255, 255, 0.15);
@@ -367,18 +405,25 @@ body {
 
     /* 1. Header & Typography Adjustments */
     .shop-header {
-        padding: 15px 15px;
-        gap: 12px;
+        padding: 10px 15px;
+        gap: 10px;
     }
 
-.   logo-img {
-        height: 37px; /* Slightly smaller for mobile screens */
+    .round-logo-img {
+        width: 46px;
+        height: 46px;
+    }
+
+    .site-name-img {
+        height: 54px; /* Slightly smaller for mobile screens */
     }
 
     .explore-btn {
         max-width: 300px;
+        margin: 75px auto 10px auto;
         padding: 10px 20px;
         font-size: 0.88rem;
+		position: relative;
     }
 
    
@@ -488,8 +533,17 @@ body {
     }
 
     .shop-header {
-        padding: 12px 12px;
-        gap: 10px;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .round-logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .site-name-img {
+        height: 37px;
     }
 } 
    
