@@ -126,7 +126,7 @@ body {
 }
 
 .explore-btn {
-	margin: 80px auto 0;
+	margin: 26px auto 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,16 +177,22 @@ body {
     display: flex;
     justify-content: center; /* Horizontally centers the hero box */
     align-items: center;     /* Vertically aligns content */
-    padding: 30px 20px 10px;
+    padding: 16px 20px 10px;
     box-sizing: border-box;
 }
 
+@keyframes softFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
 .hero-text {
     width: 100%;
-    max-width: 320px;       /* Keeps the box neat and narrow */
-    margin: 0 auto !important; /* Forces horizontal auto-margins */
-    text-align: center !important; /* Forces center alignment for every line */
+    max-width: 320px;
+    margin: 0 auto !important;
+    text-align: center !important;
     color: #4a443f;
+    /* ADD THIS LINE BELOW: */
+    animation: softFloat 4s ease-in-out infinite;
 }
 
 .hero-text h1 {
@@ -201,12 +207,14 @@ body {
 }
 
 .hero-text h5 {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-family: 'Comfortaa', cursive, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
     line-height: 1.4;
     opacity: 0.85;
     text-align: center !important;
+    color: #8c706b;
+    /* text-transform line removed so capital letters stay capital */
 }
 
 /* Category Row — horizontal scrollable strip of category shortcuts,
@@ -276,6 +284,7 @@ body {
         0 14px 28px rgba(92, 77, 76, 0.16),
         inset 0 2px 4px rgba(255, 255, 255, 0.5);
 }
+
 
 .category-icon img {
     width: 100%;
@@ -356,7 +365,7 @@ body {
     padding: 4px 8px; /* Padding inside the glass plate */
 
     width: fit-content;
-    margin: 16px auto 0;
+    margin: 86px auto 0;
 	position: relative;
 
     /* Clear Glassmorphism Styling */
@@ -396,11 +405,10 @@ body {
     }
 
     .explore-btn {
-        max-width: 300px;
-        margin: 75px auto 10px auto;
+        max-width: 260px;
+        margin: 18px auto 0 auto;
         padding: 10px 20px;
         font-size: 0.88rem;
-		position: relative;
     }
 
    
@@ -445,11 +453,12 @@ body {
 	.header-actions {
         padding: 2px 6px;
         gap: 2px;
+        margin: 78px auto 0;
     }
 	
 .hero-section {
         width: 100%;
-        padding: 24px 16px 4px;
+        padding: 12px 16px 4px;
     }
 
 .hero-text {
@@ -465,7 +474,7 @@ body {
     }
 	
 .hero-text h5 {
-        font-size: 0.88rem;
+        font-size: 1rem;
         text-align: center !important;
     }
 	
@@ -1291,3 +1300,7 @@ body {
     color: #8c706b;
     opacity: 0.85;
 }
+
+
+
+
