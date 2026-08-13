@@ -172,17 +172,16 @@ body {
     transform: translateY(0);
 }
 
+.hero-section {
+    width: 100%;
+    padding: 40px 8% 10px;
+}
+
 .hero-text {
-    position: absolute;
-    top: 45%;                  /* Vertically centers it relative to the wheel */
-    left: 8%;                  /* Anchors it nicely on the left side */
-    transform: translateY(-50%);
-    max-width: 450px;
-	text-align: left;
-    z-index: 5;                /* Same level as the wheel */
-    
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
     color: #4a443f;
-	pointer-events: none;
 }
 
 .hero-text h1 {
@@ -202,98 +201,89 @@ body {
     opacity: 0.85;
 }
 
-/* Wheel Container Placement */
-.wheel-container {
-    position: absolute;
-    top: 180px; 
-    right: -170px; 
-    width: 350px;
-    height: 350px;
-    z-index: 1;
-    pointer-events: auto;
-	transform: translateY(-50%);
-}
-
-/* The Wheel Track */
-.wheel {
+/* Category Row — horizontal scrollable strip of category shortcuts,
+   sitting between the hero text and the "Fresh Off the Hook" section. */
+.category-row-wrapper {
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: transparent;
+    padding: 10px 0 4px;
+	margin-top: 20px;
     position: relative;
-    will-change: transform;
 }
 
-/* Positioning wrapper: places each gondola around the wheel circle.
-   This element spins WITH the wheel (that's what makes it orbit). */
-.wheel-head-pos {
-    position: absolute;
-    width: 75px;
-    height: 75px;
-    top: calc(50% - 37.5px);
-    left: calc(50% - 37.5px);
-    transform: rotate(var(--angle)) translate(140px);
+.category-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-/* Content wrapper: counter-rotates by the exact opposite of the wheel's
-   live rotation (plus its own placement angle), so the circle + label
-   inside always stay upright, like a Ferris wheel gondola. */
-.wheel-content {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 100%;
-    transform: rotate(calc(-1 * (var(--angle) + var(--rotation, 0deg))));
-    transition: transform 0.05s linear;
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s ease;
 }
 
-/* Thicker-looking glass profile */
-.wheel-head {
-    width: 75px;  
-    height: 75px; 
-    
-    background: rgba(255, 255, 255, 0.55); 
-    backdrop-filter: blur(1px) saturate(140%);          
-    -webkit-backdrop-filter: blur(1px) saturate(140%);  
-    
-    border: 3px solid #c2b19c; 
-    
-    color: var(--accent-brown);
+.category-item:hover {
+    transform: translateY(-3px);
+}
+
+.category-item:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.category-icon {
+    width: 66px;
+    height: 66px;
+
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(1px) saturate(140%);
+    -webkit-backdrop-filter: blur(1px) saturate(140%);
+
+    border: 3px solid #c2b19c;
     border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 600; 
-    
-    box-shadow: 
-        0 15px 35px rgba(92, 77, 76, 0.12),   
-        0 5px 15px rgba(0, 0, 0, 0.04),        
-        inset 0 2px 4px rgba(255, 255, 255, 0.5); 
-    
-    transition: background-color 0.2s ease;
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 24px rgba(92, 77, 76, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.04),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Spacing layout positions — each item's fixed angle around the wheel */
-.head-1 { --angle: 0deg; }
-.head-2 { --angle: 45deg; }
-.head-3 { --angle: 90deg; }
-.head-4 { --angle: 135deg; }
-.head-5 { --angle: 180deg; }
-.head-6 { --angle: 225deg; }
-.head-7 { --angle: 270deg; }
-.head-8 { --angle: 315deg; }
-  
-/* Makes the image completely fill the entire glass circle */
-.wheel-head img {
+.category-item:hover .category-icon {
+    border-color: #ab9685;
+    box-shadow:
+        0 14px 28px rgba(92, 77, 76, 0.16),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.category-icon img {
     width: 100%;
     height: 100%;
-    object-fit: cover;     
-    border-radius: 50%;    
+    object-fit: cover;
+    border-radius: 50%;
     display: block;
-    pointer-events: none;  
+    pointer-events: none;
+}
+
+.category-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--accent-brown);
+    white-space: nowrap;
+    text-align: center;
 }
 /* Cart Button Base Layout */
 /* Cart Button - same style as first page */
@@ -347,27 +337,6 @@ body {
     justify-content: center;
 
     border: 2px solid #fcf9f2;
-}
-
-.wheel-label {
-    position: absolute;
-    
-    /* Pushes text completely below the 75px circle boundary */
-    top: 75px; 
-    
-    /* Centers the text horizontally relative to the circle */
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* Typography & Styling */
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--accent-brown);
-    white-space: nowrap;  /* Keeps the name on one single line */
-    
-    /* Layout Safety */
-    pointer-events: none; /* Prevents text selection from breaking dragging */
-    text-align: center;
 }
 
 /* Glass Plate Container for Instagram and Cart Buttons */
@@ -427,40 +396,41 @@ body {
     }
 
    
-    .wheel-container {
-        position: absolute;
-        top: 110px; 
-        right: -170px;          /* Exactly half of 340px width */
-        width: 340px;
-        height: 340px;
-        z-index: 5;
-        pointer-events: auto;
-        touch-action: none;
-        transform: translateY(-50%);
+    /* Category row becomes a horizontally swipeable strip on mobile so
+       all 8 categories don't have to wrap into several rows. */
+    .category-row-wrapper {
+        padding: 10px 0 6px;
     }
 
-
-    .wheel-head-pos {
-        width: clamp(56px, 18vw, 70px);
-        height: clamp(56px, 18vw, 70px);
-        top: calc(50% - clamp(28px, 9vw, 35px));
-        left: calc(50% - clamp(28px, 9vw, 35px));
-        /* Orbit radius of 125px places 3 heads fully in view & 2 peeking */
-        transform: rotate(var(--angle)) translate(clamp(95px, 30vw, 125px)); 
+    .category-row {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px;
+        padding: 4px 20px 10px;
+        scrollbar-width: none; /* Firefox */
     }
 
-    .wheel-head {
-        width: clamp(56px, 18vw, 70px);
-        height: clamp(56px, 18vw, 70px);
+    .category-row::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .category-item {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+    }
+
+    .category-icon {
+        width: clamp(56px, 18vw, 66px);
+        height: clamp(56px, 18vw, 66px);
         border-width: 2.5px;
         box-shadow: 0 8px 20px rgba(92, 77, 76, 0.15);
     }
 
-    .wheel-label {
-        top: clamp(58px, 19vw, 73px);              /* Just below the 70px circle */
-        font-size: clamp(0.65rem, 2.2vw, 0.75rem);
-        color: #5c4d4c;
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* Helps readability */
+    .category-label {
+        font-size: clamp(0.68rem, 2.2vw, 0.76rem);
     }
 	
 	
@@ -470,19 +440,14 @@ body {
     }
 	
 	.hero-section {
-    position: relative; /* This acts as an anchor for the wheel */
     width: 100%;
-    min-height: 380px;
+    padding: 24px 6% 4px;
     }
 
     .hero-text {
-        position: relative;
-        top: 2%;
-        left: 0;
-        transform: none;
         text-align: left;
         padding: 0 24px;
-        margin-top: 15px;
+        margin-top: 6px;
 		max-width: 100%;
     }
 
@@ -497,7 +462,7 @@ body {
 	
     .section-title {
 		
-        transform: translateY(-55px);
+        transform: translateY(-70px);
         font-size: 1.3rem;
 		color: #4a443f;
     }
@@ -568,7 +533,7 @@ body {
     width: 100%;
     letter-spacing: 0.5px;
     opacity: 0.9;
-	margin-top: 15vh; 
+	margin-top: 10vh; 
     margin-bottom: 20px;
     width: 100%;
     padding: 0 16px;
