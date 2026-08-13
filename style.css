@@ -174,31 +174,39 @@ body {
 
 .hero-section {
     width: 100%;
-    padding: 40px 8% 10px;
+    display: flex;
+    justify-content: center; /* Horizontally centers the hero box */
+    align-items: center;     /* Vertically aligns content */
+    padding: 30px 20px 10px;
+    box-sizing: border-box;
 }
 
 .hero-text {
-    max-width: 520px;
-    margin: 0 auto;
-    text-align: center;
+    width: 100%;
+    max-width: 320px;       /* Keeps the box neat and narrow */
+    margin: 0 auto !important; /* Forces horizontal auto-margins */
+    text-align: center !important; /* Forces center alignment for every line */
     color: #4a443f;
 }
 
 .hero-text h1 {
-    font-family: 'Fredoka','Comfortaa', cursive, sans-serif;
-    font-size: 3rem;
+    font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
+    font-size: 2.5rem;
     font-weight: 700;
     line-height: 1.15;
-	letter-spacing: 0.5px;
+    letter-spacing: 0.5px;
     margin-bottom: 14px;
-	color: #735e59;
+    color: #735e59;
+    text-align: center !important;
 }
 
-.hero-text p {
-	font-family: system-ui, -apple-system, sans-serif;
-    font-size: 1.05rem;
-	line-height: 1.5;
+.hero-text h5 {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
     opacity: 0.85;
+    text-align: center !important;
 }
 
 /* Category Row — horizontal scrollable strip of category shortcuts,
@@ -439,24 +447,26 @@ body {
         gap: 2px;
     }
 	
-	.hero-section {
-    width: 100%;
-    padding: 24px 6% 4px;
+.hero-section {
+        width: 100%;
+        padding: 24px 16px 4px;
     }
 
-    .hero-text {
-        text-align: left;
-        padding: 0 24px;
-        margin-top: 6px;
-		max-width: 100%;
+.hero-text {
+        text-align: center !important; 
+        padding: 0;
+        margin: 6px auto 0 auto !important;
+        max-width: 280px;
     }
 
-    .hero-text h1 {
-        font-size: 2.8rem;
+.hero-text h1 {
+        font-size: 2.2rem;
+        text-align: center !important;
     }
 	
-    .hero-text p {
-        font-size: 0.9rem;
+.hero-text h5 {
+        font-size: 0.88rem;
+        text-align: center !important;
     }
 	
 	
