@@ -254,3 +254,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+// Center the category scroll position when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryRow = document.getElementById('categoryRow');
+    if (categoryRow) {
+        // Calculate total scrollable width and divide by 2 to find the center
+        const maxScroll = categoryRow.scrollWidth - categoryRow.clientWidth;
+        categoryRow.scrollLeft = maxScroll / 2;
+    }
+});
+
+
+// if you wantto delete the catgory animation then delete this whole thing below this text
+
+
+// Trigger Crochet Stitch Pull animation on tap/click
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryItems = document.querySelectorAll('.category-item');
+    
+    categoryItems.forEach(item => {
+        item.addEventListener('pointerdown', () => {
+            const icon = item.querySelector('.category-icon');
+            if (icon) {
+                // Restart animation
+                icon.style.animation = 'none';
+                // Trigger reflow
+                void icon.offsetWidth; 
+                icon.style.animation = 'stitchPull 0.45s cubic-bezier(0.25, 1.25, 0.5, 1)';
+            }
+        });
+    });
+});
