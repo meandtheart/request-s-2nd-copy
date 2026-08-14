@@ -255,14 +255,14 @@ body {
 }
 
 .category-icon {
-    width: 66px;
-    height: 66px;
+    width: 70px;
+    height: 70px;
 
     background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(1px) saturate(140%);
     -webkit-backdrop-filter: blur(1px) saturate(140%);
 
-    border: 3px solid #c2b19c;
+    border: 3.5px solid #ab9685;
     border-radius: 50%;
 
     display: flex;
@@ -296,11 +296,13 @@ body {
 }
 
 .category-label {
-    font-size: 0.78rem;
+	font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--accent-brown);
     white-space: nowrap;
     text-align: center;
+	letter-spacing: 0.3px;
 }
 /* Cart Button Base Layout */
 /* Cart Button - same style as first page */
@@ -388,6 +390,41 @@ body {
    MOBILE RESPONSIVE OVERRIDES
    ===============================*/
   @media (max-width: 600px) {
+	  
+	  
+	  /* ==========================================
+   if you want to delete the category animation then delethe this block from the  this text to .category-item:active .category-icon 
+   ========================================== */
+
+/* 1. Define the hook & loop animation keyframes */
+@keyframes stitchPull {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+    30% {
+        /* Hook snags and pulls upward with a slight angle */
+        transform: translateY(-8px) rotate(-6deg) scale(1.06);
+    }
+    65% {
+        /* Loops down into the stitch */
+        transform: translateY(3px) rotate(3deg) scale(0.96);
+    }
+    100% {
+        /* Settles neatly into place */
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+/* 2. Apply smoothly to the category icons when tapped/clicked */
+.category-item .category-icon {
+    transition: transform 0.2s ease;
+    will-change: transform;
+}
+
+/* On tap/active state for mobile & click on desktop */
+.category-item:active .category-icon {
+    animation: stitchPull 0.45s cubic-bezier(0.25, 1.25, 0.5, 1) forwards;
+}
 
     /* 1. Header & Typography Adjustments */
     .shop-header {
@@ -439,14 +476,14 @@ body {
     }
 
     .category-icon {
-        width: clamp(56px, 18vw, 66px);
-        height: clamp(56px, 18vw, 66px);
+        width: clamp(60px, 22vw, 70px);
+        height: clamp(60px, 22vw, 70px);
         border-width: 2.5px;
         box-shadow: 0 8px 20px rgba(92, 77, 76, 0.15);
     }
 
     .category-label {
-        font-size: clamp(0.68rem, 2.2vw, 0.76rem);
+        font-size: clamp(.75rem, 2.2vw, 0.75rem);
     }
 	
 	
