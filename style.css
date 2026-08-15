@@ -391,6 +391,28 @@ body {
    ===============================*/
   @media (max-width: 600px) {
 
+.floating-nav {
+        padding: 6px 12px !important;
+        bottom: 12px !important;  /* Brings it closer to the bottom screen edge */
+        gap: 8px !important;
+    }
+
+    /* 2. Scale down individual nav buttons */
+    .nav-item {
+        padding: 4px 8px !important;
+        gap: 2px !important;      /* Reduces space between icon and text */
+    }
+
+    /* 3. Reduce SVG icon sizes */
+    .nav-item svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    /* 4. Shrink font size */
+    .nav-item span {
+        font-size: 0.68rem !important;
+    }
 
     /* 1. Header & Typography Adjustments */
     .shop-header {
