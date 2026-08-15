@@ -256,6 +256,78 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// =========================================================================
+// FLOATING NAV — SLIDING PILL INDICATOR (smooth page-to-page animation)
+// =========================================================================
+// This site is multi-page (each tap on Home/Shop/Cart is a real page load),
+// so there's no single running app to animate "between" pages. Instead we
+// fake a seamless slide by remembering which tab was active before the tap
+// (sessionStorage) and, on the NEW page's load, snapping the pill to the
+// OLD tab's position first, then animating it over to the new tab. Because
+// this all happens within the same paint cycle, it reads as one continuous
+// glide even though it's technically two separate page loads.
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.floating-nav');
+    const indicator = document.getElementById('navIndicator');
+    if (!nav || !indicator) return;
+
+    const items = Array.from(nav.querySelectorAll('.nav-item'));
+    if (items.length === 0) return;
+
+    const activeItem = nav.querySelector('.nav-item.active') || items[0];
+    const activeIndex = items.indexOf(activeItem);
+
+    // Moves the pill to sit exactly under `item`. When `animate` is false,
+    // the transition is switched off for one frame so the move is instant.
+    function placeIndicator(item, animate) {
+        if (!item) return;
+        const navRect = nav.getBoundingClientRect();
+        const itemRect = item.getBoundingClientRect();
+        const x = itemRect.left - navRect.left;
+
+        if (!animate) indicator.style.transition = 'none';
+        indicator.style.width = itemRect.width + 'px';
+        indicator.style.transform = `translateX(${x}px)`;
+        if (!animate) {
+            // Force a reflow so the "no transition" instant jump is
+            // actually applied before we hand transitions back on.
+            void indicator.offsetHeight;
+            indicator.style.transition = '';
+        }
+    }
+
+    const storedIndex = sessionStorage.getItem('navActiveIndex');
+
+    if (storedIndex !== null && Number(storedIndex) !== activeIndex && items[storedIndex]) {
+        // Snap to where the pill "was" on the previous page...
+        placeIndicator(items[storedIndex], false);
+        // ...then glide it to where it belongs on this page.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => placeIndicator(activeItem, true));
+        });
+    } else {
+        // First visit this session, or same tab reloaded — just place it.
+        placeIndicator(activeItem, false);
+    }
+
+    sessionStorage.setItem('navActiveIndex', activeIndex);
+
+    // Remember which tab was tapped right before navigating away, so the
+    // next page knows where to start its glide from.
+    items.forEach((item, idx) => {
+        item.addEventListener('click', () => {
+            sessionStorage.setItem('navActiveIndex', idx);
+        });
+    });
+
+    // Keep the pill aligned if the viewport is resized/rotated.
+    window.addEventListener('resize', () => {
+        const current = nav.querySelector('.nav-item.active') || items[0];
+        placeIndicator(current, false);
+    });
+});
+
+
 // Center the category scroll position when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     const categoryRow = document.getElementById('categoryRow');
@@ -266,24 +338,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-// if you wantto delete the catgory animation then delete this whole thing below this text
-
-
-// Trigger Crochet Stitch Pull animation on tap/click
+// =========================================================================
+// CATEGORY ROW — tap ripple + squish feedback
+// =========================================================================
+// Category items are plain links (they need to work with a middle-click /
+// long-press / "open in new tab" too), so instead of hijacking navigation
+// entirely we just play a very quick ripple + squish, then let the browser
+// follow the link a beat later — long enough to actually see the effect,
+// short enough that it never feels like it's slowing the tap down.
 document.addEventListener('DOMContentLoaded', () => {
     const categoryItems = document.querySelectorAll('.category-item');
-    
+    if (!categoryItems.length) return;
+
     categoryItems.forEach(item => {
-        item.addEventListener('pointerdown', () => {
+        item.addEventListener('click', (e) => {
+            // Respect modified clicks (new tab, etc.) — don't delay those.
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+
             const icon = item.querySelector('.category-icon');
-            if (icon) {
-                // Restart animation
-                icon.style.animation = 'none';
-                // Trigger reflow
-                void icon.offsetWidth; 
-                icon.style.animation = 'stitchPull 0.45s cubic-bezier(0.25, 1.25, 0.5, 1)';
-            }
-        });
+            if (!icon) return;
+
+            e.preventDefault();
+
+            const ripple = document.createElement('span');
+            ripple.className = 'tap-ripple';
+            icon.appendChild(ripple);
+
+            item.classList.add('tapped');
+
+            const destination = item.href;
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 190);
+        }, { passive: false });
     });
 });
