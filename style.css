@@ -243,46 +243,111 @@ body {
     gap: 8px;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
-    transition: transform 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Playful staggered pop-in when the page first loads */
+    opacity: 0;
+    animation: categoryPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.category-item:nth-child(1) { animation-delay: 0.05s; }
+.category-item:nth-child(2) { animation-delay: 0.11s; }
+.category-item:nth-child(3) { animation-delay: 0.17s; }
+.category-item:nth-child(4) { animation-delay: 0.23s; }
+.category-item:nth-child(5) { animation-delay: 0.29s; }
+.category-item:nth-child(6) { animation-delay: 0.35s; }
+.category-item:nth-child(7) { animation-delay: 0.41s; }
+.category-item:nth-child(8) { animation-delay: 0.47s; }
+
+@keyframes categoryPopIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .category-item:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
 }
 
 .category-item:active {
-    transform: translateY(0) scale(0.96);
+    transform: translateY(-1px) scale(0.92);
+}
+
+/* Tap ripple + squish feedback, added by script.js right before the page
+   navigates so the effect actually gets a moment to be seen on mobile. */
+.category-item.tapped {
+    transform: translateY(-1px) scale(0.9);
+}
+
+.category-item.tapped .category-icon {
+    border-color: #8c7568;
+    box-shadow:
+        0 4px 14px rgba(92, 77, 76, 0.22),
+        0 0 0 6px rgba(171, 150, 133, 0.18);
 }
 
 .category-icon {
     width: 70px;
     height: 70px;
 
-    background: rgba(255, 255, 255, 0.55);
+    background:
+        linear-gradient(#fffaf3, #fffaf3) padding-box,
+        linear-gradient(135deg, #ab9685, #e9c8b2, #ab9685) border-box;
     backdrop-filter: blur(1px) saturate(140%);
     -webkit-backdrop-filter: blur(1px) saturate(140%);
 
-    border: 3.5px solid #ab9685;
+    border: 3.5px solid transparent;
     border-radius: 50%;
 
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
 
     box-shadow:
         0 10px 24px rgba(92, 77, 76, 0.12),
         0 4px 10px rgba(0, 0, 0, 0.04),
         inset 0 2px 4px rgba(255, 255, 255, 0.5);
 
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .category-item:hover .category-icon {
-    border-color: #ab9685;
     box-shadow:
         0 14px 28px rgba(92, 77, 76, 0.16),
         inset 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+/* Little expanding "tap" ring — a span injected by script.js on tap */
+.category-icon .tap-ripple {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(171, 150, 133, 0.45) 0%, rgba(171, 150, 133, 0) 70%);
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+    animation: rippleExpand 0.5s ease-out forwards;
+}
+
+@keyframes rippleExpand {
+    to {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .category-item {
+        animation: none;
+        opacity: 1;
+    }
 }
 
 
@@ -293,6 +358,11 @@ body {
     border-radius: 50%;
     display: block;
     pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.category-item:hover .category-icon img {
+    transform: scale(1.08);
 }
 
 .category-label {
@@ -303,6 +373,11 @@ body {
     white-space: nowrap;
     text-align: center;
 	letter-spacing: 0.3px;
+    transition: color 0.2s ease;
+}
+
+.category-item.tapped .category-label {
+    color: #8c7568;
 }
 /* Cart Button Base Layout */
 /* Cart Button - same style as first page */
@@ -390,41 +465,7 @@ body {
    MOBILE RESPONSIVE OVERRIDES
    ===============================*/
   @media (max-width: 600px) {
-	  
-	  
-	  /* ==========================================
-   if you want to delete the category animation then delethe this block from the  this text to .category-item:active .category-icon 
-   ========================================== */
 
-/* 1. Define the hook & loop animation keyframes */
-@keyframes stitchPull {
-    0% {
-        transform: translateY(0) rotate(0deg) scale(1);
-    }
-    30% {
-        /* Hook snags and pulls upward with a slight angle */
-        transform: translateY(-8px) rotate(-6deg) scale(1.06);
-    }
-    65% {
-        /* Loops down into the stitch */
-        transform: translateY(3px) rotate(3deg) scale(0.96);
-    }
-    100% {
-        /* Settles neatly into place */
-        transform: translateY(0) rotate(0deg) scale(1);
-    }
-}
-
-/* 2. Apply smoothly to the category icons when tapped/clicked */
-.category-item .category-icon {
-    transition: transform 0.2s ease;
-    will-change: transform;
-}
-
-/* On tap/active state for mobile & click on desktop */
-.category-item:active .category-icon {
-    animation: stitchPull 0.45s cubic-bezier(0.25, 1.25, 0.5, 1) forwards;
-}
 
     /* 1. Header & Typography Adjustments */
     .shop-header {
@@ -453,13 +494,37 @@ body {
        all 8 categories don't have to wrap into several rows. */
     .category-row-wrapper {
         padding: 10px 0 6px;
+        position: relative;
+    }
+
+    /* Soft fade at both edges hints there's more to scroll — a small
+       polish borrowed from native app category rows. */
+    .category-row-wrapper::before,
+    .category-row-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 10px;
+        width: 28px;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .category-row-wrapper::before {
+        left: 0;
+        background: linear-gradient(90deg, var(--page-bg-color, #f2e8d9) 0%, rgba(242, 232, 217, 0) 100%);
+    }
+
+    .category-row-wrapper::after {
+        right: 0;
+        background: linear-gradient(270deg, var(--page-bg-color, #f2e8d9) 0%, rgba(242, 232, 217, 0) 100%);
     }
 
     .category-row {
         flex-wrap: nowrap;
         justify-content: flex-start;
         overflow-x: auto;
-        scroll-snap-type: x proximity;
+        scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         gap: 16px;
         padding: 4px 20px 10px;
@@ -472,7 +537,7 @@ body {
 
     .category-item {
         flex: 0 0 auto;
-        scroll-snap-align: start;
+        scroll-snap-align: center;
     }
 
     .category-icon {
@@ -1177,6 +1242,27 @@ body {
     z-index: 500;
 }
 
+/* Sliding pill that glides to whichever tab is active — sits behind the
+   icons/labels and is fully controlled by JS (see script.js). It has no
+   transition set inline; script.js turns the transition on/off so the
+   very first paint on a page is instant and only page-to-page moves glide. */
+.nav-indicator {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 0;
+    border-radius: 30px;
+    background: #f2e4d3; /* Slightly darker recessed clay color */
+    box-shadow:
+        inset 3px 3px 6px rgba(139, 111, 92, 0.35),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+                width 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+}
+
 /* Clay Navigation Items */
 .floating-nav .nav-item {
     display: flex;
@@ -1193,8 +1279,10 @@ body {
     font-size: 0.75rem;
     font-weight: 600;
     border-radius: 30px;
+    position: relative;
+    z-index: 1; /* sits above .nav-indicator */
     
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy fluid transition */
+    transition: color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy fluid transition */
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -1214,15 +1302,10 @@ body {
     transform: scale(0.92);
 }
 
-/* Active Page Clay Button Highlight */
+/* Active Page Clay Button Highlight — color/icon only now; the recessed
+   clay background itself lives on .nav-indicator so it can glide. */
 .floating-nav .nav-item.active {
     color: #5c4d4c;
-    background: #f2e4d3; /* Slightly darker recessed clay color */
-    
-    /* Pressed inset clay effect */
-    box-shadow: 
-        inset 3px 3px 6px rgba(139, 111, 92, 0.35),
-        inset -3px -3px 6px rgba(255, 255, 255, 0.9);
 }
 
 .floating-nav .nav-item.active svg {
@@ -1337,7 +1420,3 @@ body {
     color: #8c706b;
     opacity: 0.85;
 }
-
-
-
-
