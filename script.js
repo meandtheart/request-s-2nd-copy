@@ -337,39 +337,3 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryRow.scrollLeft = maxScroll / 2;
     }
 });
-
-// =========================================================================
-// CATEGORY ROW — tap ripple + squish feedback
-// =========================================================================
-// Category items are plain links (they need to work with a middle-click /
-// long-press / "open in new tab" too), so instead of hijacking navigation
-// entirely we just play a very quick ripple + squish, then let the browser
-// follow the link a beat later — long enough to actually see the effect,
-// short enough that it never feels like it's slowing the tap down.
-document.addEventListener('DOMContentLoaded', () => {
-    const categoryItems = document.querySelectorAll('.category-item');
-    if (!categoryItems.length) return;
-
-    categoryItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            // Respect modified clicks (new tab, etc.) — don't delay those.
-            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-
-            const icon = item.querySelector('.category-icon');
-            if (!icon) return;
-
-            e.preventDefault();
-
-            const ripple = document.createElement('span');
-            ripple.className = 'tap-ripple';
-            icon.appendChild(ripple);
-
-            item.classList.add('tapped');
-
-            const destination = item.href;
-            setTimeout(() => {
-                window.location.href = destination;
-            }, 190);
-        }, { passive: false });
-    });
-});
