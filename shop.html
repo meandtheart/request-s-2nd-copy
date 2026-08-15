@@ -407,46 +407,159 @@
          z-index: 1;
 }
 
-        /* Category filter bar — shown when arriving via a wheel tap */
-        .filter-bar {
+        /* =================================================================
+           CATEGORY CHIP FILTER — a horizontally-scrolling row of "stitched"
+           fabric-tag chips, cozy-craft take on the usual e-commerce filter
+           row. Tapping a chip filters instantly (no page reload).
+           ================================================================= */
+        .chip-filter-wrapper {
+            margin: 0 -16px 6px -16px;
+            padding: 0 16px;
+            overflow: visible;
+        }
+
+        .chip-filter-row {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 2px 12px 2px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .chip-filter-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            flex: 0 0 auto;
+            font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #8c7568;
+            background: #fffaf3;
+            border: 1.5px dashed #c2a38a; /* little stitched-edge touch */
+            border-radius: 999px;
+            padding: 9px 18px;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(140, 112, 100, 0.1);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-color 0.2s ease,
+                        color 0.2s ease,
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .filter-chip:active {
+            transform: scale(0.94);
+        }
+
+        .filter-chip.active {
+            background: #ab9685;
+            border-style: solid;
+            border-color: #ab9685;
+            color: #fffaf3;
+            box-shadow: 0 6px 14px rgba(140, 112, 100, 0.28);
+            transform: translateY(-2px);
+        }
+
+        /* Sort row — small clay-style dropdown button, sits under the chips */
+        .sort-row {
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+            margin: 0 0 20px 0;
+        }
+
+        .sort-btn {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            background: #fffaf3;
+            gap: 6px;
+            font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #5c4d4c;
+            background: #f7efe3;
+            border: none;
             border-radius: 999px;
-            padding: 10px 18px;
-            margin: 0 0 22px 0;
-            box-shadow: 0 4px 12px rgba(140, 112, 100, 0.14);
+            padding: 8px 14px;
+            cursor: pointer;
+            box-shadow:
+                0 3px 8px rgba(115, 94, 89, 0.1),
+                inset -2px -2px 4px rgba(184, 161, 149, 0.3),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.9);
+            transition: transform 0.2s ease;
         }
 
-        .filter-label {
+        .sort-btn:active {
+            transform: scale(0.96);
+        }
+
+        .sort-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.25s ease;
+        }
+
+        .sort-btn.open svg {
+            transform: rotate(180deg);
+        }
+
+        .sort-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #fffaf3;
+            border-radius: 18px;
+            box-shadow: 0 10px 24px rgba(140, 112, 100, 0.22);
+            padding: 6px;
+            min-width: 190px;
+            z-index: 20;
+            opacity: 0;
+            transform: translateY(-8px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .sort-dropdown.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .sort-option {
+            display: block;
+            width: 100%;
+            text-align: left;
             font-family: 'Comfortaa', sans-serif;
             font-size: 0.85rem;
-            color: #8c7568;
-        }
-
-        .filter-label strong {
-            font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
             color: #5c4d4c;
+            background: none;
+            border: none;
+            border-radius: 12px;
+            padding: 9px 12px;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
         }
 
-        .filter-clear {
-            font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #fffaf3;
-            background: #ab9685;
-            border-radius: 999px;
-            padding: 6px 14px;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: background-color 0.2s ease;
+        .sort-option:hover,
+        .sort-option:active {
+            background: #f2e4d3;
         }
 
-        .filter-clear:hover,
-        .filter-clear:active {
-            background: #97826f;
+        .sort-option.active {
+            color: #ab9685;
+            font-weight: 700;
+        }
+
+        .results-count {
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 0.78rem;
+            color: #a9968a;
+            margin: -10px 0 16px 2px;
         }
 
         .empty-state {
@@ -504,10 +617,27 @@
 </div>
 
 
-        <div class="filter-bar" id="filterBar" style="display:none;">
-            <span class="filter-label">Showing: <strong id="filterCategoryName"></strong></span>
-            <a href="shop.html" class="filter-clear">View All</a>
+        <div class="chip-filter-wrapper">
+            <div class="chip-filter-row" id="chipFilterRow"></div>
         </div>
+
+        <div class="sort-row">
+            <button class="sort-btn" id="sortBtn" aria-label="Sort products">
+                <span id="sortLabel">Sort: Featured</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div class="sort-dropdown" id="sortDropdown">
+                <button class="sort-option active" data-sort="featured">Featured</button>
+                <button class="sort-option" data-sort="price-asc">Price: Low to High</button>
+                <button class="sort-option" data-sort="price-desc">Price: High to Low</button>
+                <button class="sort-option" data-sort="name-asc">Name: A–Z</button>
+            </div>
+        </div>
+
+        <p class="results-count" id="resultsCount"></p>
+
         <div class="pinterest-grid" id="productGrid"></div>
         <p class="empty-state" id="emptyState" style="display:none;">No products in this category yet — check back soon!</p>
     </main>
@@ -588,6 +718,7 @@
 </footer>
 
     <nav class="floating-nav" aria-label="Main Navigation">
+        <div class="nav-indicator" id="navIndicator"></div>
         <a href="index.html" class="nav-item" aria-label="Home">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -667,11 +798,118 @@ function getCategoryFromURL() {
     return params.get('category');
 }
 
+// ---- Filter / sort state -------------------------------------------------
+// Starts from whatever ?category= arrived with (e.g. a homepage wheel tap),
+// then chip taps take over from here on — no more page reloads needed.
+let activeCategory = getCategoryFromURL() || 'all';
+let activeSort = 'featured';
+
+const CATEGORY_ORDER = ["Plushies", "Keychains", "Hair Accessories", "Figurines", "Flowers", "Sanrio", "Clips", "Cat collars"];
+
+// Builds the "All" + one chip per category that actually has products,
+// in the same order as the homepage wheel so it feels consistent.
+function buildChips() {
+    const row = document.getElementById('chipFilterRow');
+    const present = new Set(PRODUCTS.map(p => p.category));
+    const categories = CATEGORY_ORDER.filter(c => present.has(c));
+
+    row.innerHTML = '';
+
+    const allChip = document.createElement('button');
+    allChip.className = 'filter-chip' + (activeCategory === 'all' ? ' active' : '');
+    allChip.textContent = 'All';
+    allChip.dataset.category = 'all';
+    row.appendChild(allChip);
+
+    categories.forEach(cat => {
+        const chip = document.createElement('button');
+        chip.className = 'filter-chip' + (activeCategory === cat ? ' active' : '');
+        chip.textContent = cat;
+        chip.dataset.category = cat;
+        row.appendChild(chip);
+    });
+
+    row.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            activeCategory = chip.dataset.category;
+
+            // Keep the URL in sync (shareable / back-button friendly)
+            // without a full page reload.
+            const url = new URL(window.location.href);
+            if (activeCategory === 'all') {
+                url.searchParams.delete('category');
+            } else {
+                url.searchParams.set('category', activeCategory);
+            }
+            history.replaceState(null, '', url);
+
+            row.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+
+            // Gently scroll the tapped chip into view on small screens.
+            chip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+            renderProducts();
+        });
+    });
+}
+
+const SORT_LABELS = {
+    'featured': 'Sort: Featured',
+    'price-asc': 'Sort: Price ↑',
+    'price-desc': 'Sort: Price ↓',
+    'name-asc': 'Sort: Name A–Z'
+};
+
+function sortProducts(list) {
+    const sorted = [...list];
+    const priceOf = p => parseFloat(String(p.price).replace(/[^0-9.]+/g, '')) || 0;
+
+    if (activeSort === 'price-asc') sorted.sort((a, b) => priceOf(a) - priceOf(b));
+    else if (activeSort === 'price-desc') sorted.sort((a, b) => priceOf(b) - priceOf(a));
+    else if (activeSort === 'name-asc') sorted.sort((a, b) => a.title.localeCompare(b.title));
+    // 'featured' = leave in the original PRODUCTS order
+
+    return sorted;
+}
+
+function initSortDropdown() {
+    const sortBtn = document.getElementById('sortBtn');
+    const dropdown = document.getElementById('sortDropdown');
+    const sortLabel = document.getElementById('sortLabel');
+
+    sortBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+        sortBtn.classList.toggle('open');
+    });
+
+    dropdown.querySelectorAll('.sort-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+            activeSort = opt.dataset.sort;
+            sortLabel.textContent = SORT_LABELS[activeSort];
+
+            dropdown.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+
+            dropdown.classList.remove('open');
+            sortBtn.classList.remove('open');
+
+            renderProducts();
+        });
+    });
+
+    // Close the dropdown when tapping anywhere else on the page.
+    document.addEventListener('click', () => {
+        dropdown.classList.remove('open');
+        sortBtn.classList.remove('open');
+    });
+}
+
 function renderProducts() {
     const grid = document.getElementById('productGrid');
     const emptyState = document.getElementById('emptyState');
-    const filterBar = document.getElementById('filterBar');
-    const filterCategoryName = document.getElementById('filterCategoryName');
+    const resultsCount = document.getElementById('resultsCount');
     
     // Read search input value
     const searchQuery = document.getElementById('searchInput') 
@@ -679,23 +917,23 @@ function renderProducts() {
         : '';
 
     grid.innerHTML = '';
-    const activeCategory = getCategoryFromURL();
-
-    if (activeCategory) {
-        filterBar.style.display = 'flex';
-        filterCategoryName.textContent = activeCategory;
-    } else {
-        filterBar.style.display = 'none';
-    }
 
     // Filter by both Category and Search Query
-    const productsToShow = PRODUCTS.filter(p => {
-        const matchesCategory = activeCategory ? p.category === activeCategory : true;
+    let productsToShow = PRODUCTS.filter(p => {
+        const matchesCategory = activeCategory === 'all' ? true : p.category === activeCategory;
         const matchesSearch = p.title.toLowerCase().includes(searchQuery);
         return matchesCategory && matchesSearch;
     });
 
+    productsToShow = sortProducts(productsToShow);
+
     emptyState.style.display = productsToShow.length === 0 ? 'block' : 'none';
+
+    if (resultsCount) {
+        resultsCount.textContent = productsToShow.length === 0
+            ? ''
+            : `${productsToShow.length} creation${productsToShow.length === 1 ? '' : 's'}`;
+    }
 
     productsToShow.forEach(product => {
         const card = document.createElement('div');
@@ -716,6 +954,8 @@ function renderProducts() {
     });
 }
 
+buildChips();
+initSortDropdown();
 renderProducts();
 
 // Holds the product currently shown in the pop-up so the Buy Now /
