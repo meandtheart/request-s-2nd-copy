@@ -568,9 +568,88 @@
             color: #8c7568;
             padding: 40px 20px;
         }
+		
+		/* =========================================================================
+   COZY AESTHETIC PRELOADER
+   ========================================================================= */
+#cozyPreloader {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F2E8D9; /* Matching Yaeneko warm base background */
+    background-image:
+        radial-gradient(circle at 50% 40%, rgba(232, 217, 192, 0.7) 0%, transparent 50%),
+        radial-gradient(circle at 5% 90%, rgba(201, 151, 63, 0.35) 0%, transparent 40%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#cozyPreloader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.yarn-spinner {
+    width: 80px;
+    height: 80px;
+    background: #fffaf3;
+    border: 3px solid #c2a38a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(140, 112, 100, 0.18);
+    animation: gentlePulse 1.8s ease-in-out infinite;
+}
+
+.yarn-ball {
+    font-size: 2.2rem;
+    animation: yarnRotate 2s linear infinite;
+}
+
+.preloader-text {
+    font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5c4d4c;
+    letter-spacing: 0.5px;
+}
+
+@keyframes yarnRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes gentlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
     </style>
 </head>
 <body>
+
+<!-- Cozy Aesthetic Preloader -->
+<div id="cozyPreloader">
+  <div class="preloader-content">
+    <div class="yarn-spinner">
+      <div class="yarn-ball">🧶</div>
+    </div>
+    <p class="preloader-text">Crocheting your shop...</p>
+  </div>
+</div>
 
     <div class="page-bg"></div>
 
@@ -1019,6 +1098,14 @@ function closeModalOnOverlay(e) {
         closeProductModal();
     }
 }
+
+// Hide preloader smoothly after the page and all product images are fully loaded
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('cozyPreloader');
+    if (preloader) {
+        preloader.classList.add('fade-out');
+    }
+});
     </script>
 </body>
 </html>
