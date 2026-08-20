@@ -392,26 +392,27 @@ body {
   @media (max-width: 600px) {
 
 .floating-nav {
-        padding: 8px 16px !important;
-        bottom: 16px !important;  /* Brings it closer to the bottom screen edge */
-        gap: 12px !important;
+        padding: 6px 10px !important;
+        bottom: calc(14px + env(safe-area-inset-bottom)) !important;  /* Brings it closer to the bottom screen edge */
+        gap: 4px !important;
+        max-width: 240px !important;
     }
 
     /* 2. Scale down individual nav buttons */
     .nav-item {
-        padding: 6px 10px !important;
-        gap: 4px !important;      /* Reduces space between icon and text */
+        padding: 5px 6px !important;
+        gap: 2px !important;      /* Reduces space between icon and text */
     }
 
     /* 3. Reduce SVG icon sizes */
     .nav-item svg {
-        width: 22px !important;
-        height: 22px !important;
+        width: 17px !important;
+        height: 17px !important;
     }
 
     /* 4. Shrink font size */
     .nav-item span {
-        font-size: 0.75rem !important;
+        font-size: 0.6rem !important;
     }
 
     /* 1. Header & Typography Adjustments */
@@ -1138,18 +1139,18 @@ body {
 .floating-nav {
     position: fixed;
     /* Adjust this distance from the bottom as needed */
-    bottom: calc(20px + env(safe-area-inset-bottom)); 
+    bottom: calc(16px + env(safe-area-inset-bottom)); 
     left: 50%;
     transform: translateX(-50%);
     
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap: 10px;
+    gap: 6px;
     
-    width: calc(100% - 48px);
-    max-width: 320px;
-    padding: 10px 14px;
+    width: calc(100% - 64px);
+    max-width: 260px;
+    padding: 6px 10px;
     
     /* Clay Material Styling */
     background: #f7efe3; /* Soft cream ceramic base */
@@ -1179,8 +1180,6 @@ body {
     box-shadow:
         inset 3px 3px 6px rgba(139, 111, 92, 0.35),
         inset -3px -3px 6px rgba(255, 255, 255, 0.9);
-    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1),
-                width 0.45s cubic-bezier(0.65, 0, 0.35, 1);
     z-index: 0;
     pointer-events: none;
     will-change: transform;
@@ -1192,47 +1191,31 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 2px;
     
     flex: 1;
-    padding: 8px 0;
+    padding: 5px 0;
     text-decoration: none;
     color: #735e59;
     font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif; /* Matching your site fonts */
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     font-weight: 600;
     border-radius: 30px;
     position: relative;
     z-index: 1; /* sits above .nav-indicator */
     
-    transition: color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy fluid transition */
     -webkit-tap-highlight-color: transparent;
 }
 
 .floating-nav .nav-item svg {
-    width: 22px;
-    height: 22px;
-    transition: transform 0.25s ease;
-}
-
-/* Hover & Tap Animations */
-.floating-nav .nav-item:hover {
-    color: #5c4d4c;
-    transform: translateY(-3px);
-}
-
-.floating-nav .nav-item:active {
-    transform: scale(0.92);
+    width: 18px;
+    height: 18px;
 }
 
 /* Active Page Clay Button Highlight — color/icon only now; the recessed
-   clay background itself lives on .nav-indicator so it can glide. */
+   clay background itself lives on .nav-indicator. */
 .floating-nav .nav-item.active {
     color: #5c4d4c;
-}
-
-.floating-nav .nav-item.active svg {
-    transform: scale(1.1);
 }
 
 
