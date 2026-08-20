@@ -46,7 +46,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 16px;
-    padding: 14px 20px;
+    padding: 20px 20px;
 
     width: 100%;
     background: linear-gradient(
@@ -71,7 +71,7 @@ body {
     top: auto !important;
 	left: 0 !important;
     z-index: 1000 !important;
-    min-height: 64px;
+    min-height: 80px;
 }
 
 /* Round logo, pinned to the left of the header */
@@ -87,8 +87,8 @@ body {
 }
 
 .round-logo-img {
-    width: 58px;
-    height: 58px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     object-fit: cover;
     display: block;
@@ -111,7 +111,7 @@ body {
 }
 
 .site-name-img {
-    height: 56px;
+    height: 66px;
     width: auto;
     display: block;
     object-fit: contain;
@@ -367,7 +367,7 @@ body {
     padding: 4px 8px; /* Padding inside the glass plate */
 
     width: fit-content;
-    margin: 86px auto 0;
+    margin: 105px auto 10px auto;
 	position: relative;
 
     /* Clear Glassmorphism Styling */
@@ -417,17 +417,17 @@ body {
 
     /* 1. Header & Typography Adjustments */
     .shop-header {
-        padding: 10px 15px;
+        padding: 11px 15px;
         gap: 10px;
     }
 
     .round-logo-img {
-        width: 46px;
-        height: 46px;
+        width: 48px;
+        height: 48px;
     }
 
     .site-name-img {
-        height: 54px; /* Slightly smaller for mobile screens */
+        height: 56px; /* Slightly smaller for mobile screens */
     }
 
     .explore-btn {
@@ -479,7 +479,7 @@ body {
 	.header-actions {
         padding: 2px 6px;
         gap: 2px;
-        margin: 78px auto 0;
+        margin: 95px auto 10px auto;
     }
 	
 .hero-section {
@@ -548,12 +548,12 @@ body {
     }
 
     .round-logo-img {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
     }
 
     .site-name-img {
-        height: 37px;
+        height: 39px;
     }
 } 
    
