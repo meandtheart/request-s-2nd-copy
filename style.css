@@ -299,7 +299,7 @@ body {
 	font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif;
     font-size: 2rem;
     font-weight: 600;
-    color: var(--accent-brown);
+    color: #8c7568;
     white-space: nowrap;
     text-align: center;
 	letter-spacing: 0.3px;
@@ -422,12 +422,12 @@ body {
     }
 
     .round-logo-img {
-        width: 48px;
-        height: 48px;
+        width: 51px;
+        height: 51px;
     }
 
     .site-name-img {
-        height: 56px; /* Slightly smaller for mobile screens */
+        height: 60px; /* Slightly smaller for mobile screens */
     }
 
     .explore-btn {
