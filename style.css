@@ -392,27 +392,27 @@ body {
   @media (max-width: 600px) {
 
 .floating-nav {
-        padding: 6px 10px !important;
-        bottom: calc(14px + env(safe-area-inset-bottom)) !important;  /* Brings it closer to the bottom screen edge */
-        gap: 4px !important;
-        max-width: 240px !important;
+        padding: 8px 14px !important;
+        bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+        gap: 8px !important;
+        max-width: 290px !important;
     }
 
     /* 2. Scale down individual nav buttons */
     .nav-item {
-        padding: 5px 6px !important;
-        gap: 2px !important;      /* Reduces space between icon and text */
+        padding: 6px 8px !important;
+        gap: 3px !important;      /* Reduces space between icon and text */
     }
 
     /* 3. Reduce SVG icon sizes */
     .nav-item svg {
-        width: 17px !important;
-        height: 17px !important;
+        width: 20px !important;
+        height: 20px !important;
     }
 
     /* 4. Shrink font size */
     .nav-item span {
-        font-size: 0.6rem !important;
+        font-size: 0.7rem !important;
     }
 
     /* 1. Header & Typography Adjustments */
@@ -1139,18 +1139,18 @@ body {
 .floating-nav {
     position: fixed;
     /* Adjust this distance from the bottom as needed */
-    bottom: calc(16px + env(safe-area-inset-bottom)); 
+    bottom: calc(18px + env(safe-area-inset-bottom)); 
     left: 50%;
     transform: translateX(-50%);
     
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap: 6px;
+    gap: 8px;
     
-    width: calc(100% - 64px);
-    max-width: 260px;
-    padding: 6px 10px;
+    width: calc(100% - 56px);
+    max-width: 290px;
+    padding: 8px 12px;
     
     /* Clay Material Styling */
     background: #f7efe3; /* Soft cream ceramic base */
@@ -1191,14 +1191,14 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
+    gap: 3px;
     
     flex: 1;
-    padding: 5px 0;
+    padding: 6px 0;
     text-decoration: none;
     color: #735e59;
     font-family: 'Fredoka', 'Comfortaa', cursive, sans-serif; /* Matching your site fonts */
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: 600;
     border-radius: 30px;
     position: relative;
@@ -1208,8 +1208,8 @@ body {
 }
 
 .floating-nav .nav-item svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
 }
 
 /* Active Page Clay Button Highlight — color/icon only now; the recessed
