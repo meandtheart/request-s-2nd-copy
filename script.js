@@ -257,15 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // =========================================================================
-// FLOATING NAV — SLIDING PILL INDICATOR (smooth page-to-page animation)
+// FLOATING NAV — STATIC PILL INDICATOR (no animation)
 // =========================================================================
-// This site is multi-page (each tap on Home/Shop/Cart is a real page load),
-// so there's no single running app to animate "between" pages. Instead we
-// fake a seamless slide by remembering which tab was active before the tap
-// (sessionStorage) and, on the NEW page's load, snapping the pill to the
-// OLD tab's position first, then animating it over to the new tab. Because
-// this all happens within the same paint cycle, it reads as one continuous
-// glide even though it's technically two separate page loads.
+// Places the pill directly under whichever tab is active. No page-to-page
+// glide, no transition — it just snaps to the right spot.
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.floating-nav');
     const indicator = document.getElementById('navIndicator');
@@ -274,56 +269,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = Array.from(nav.querySelectorAll('.nav-item'));
     if (items.length === 0) return;
 
-    const activeItem = nav.querySelector('.nav-item.active') || items[0];
-    const activeIndex = items.indexOf(activeItem);
-
-    // Moves the pill to sit exactly under `item`. When `animate` is false,
-    // the transition is switched off for one frame so the move is instant.
-    function placeIndicator(item, animate) {
+    function placeIndicator(item) {
         if (!item) return;
         const navRect = nav.getBoundingClientRect();
         const itemRect = item.getBoundingClientRect();
         const x = itemRect.left - navRect.left;
 
-        if (!animate) indicator.style.transition = 'none';
         indicator.style.width = itemRect.width + 'px';
         indicator.style.transform = `translateX(${x}px)`;
-        if (!animate) {
-            // Force a reflow so the "no transition" instant jump is
-            // actually applied before we hand transitions back on.
-            void indicator.offsetHeight;
-            indicator.style.transition = '';
-        }
     }
 
-    const storedIndex = sessionStorage.getItem('navActiveIndex');
-
-    if (storedIndex !== null && Number(storedIndex) !== activeIndex && items[storedIndex]) {
-        // Snap to where the pill "was" on the previous page...
-        placeIndicator(items[storedIndex], false);
-        // ...then glide it to where it belongs on this page.
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => placeIndicator(activeItem, true));
-        });
-    } else {
-        // First visit this session, or same tab reloaded — just place it.
-        placeIndicator(activeItem, false);
+    function getActiveItem() {
+        return nav.querySelector('.nav-item.active') || items[0];
     }
 
-    sessionStorage.setItem('navActiveIndex', activeIndex);
-
-    // Remember which tab was tapped right before navigating away, so the
-    // next page knows where to start its glide from.
-    items.forEach((item, idx) => {
-        item.addEventListener('click', () => {
-            sessionStorage.setItem('navActiveIndex', idx);
-        });
-    });
+    placeIndicator(getActiveItem());
 
     // Keep the pill aligned if the viewport is resized/rotated.
     window.addEventListener('resize', () => {
-        const current = nav.querySelector('.nav-item.active') || items[0];
-        placeIndicator(current, false);
+        placeIndicator(getActiveItem());
     });
 });
 
